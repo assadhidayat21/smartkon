@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMARTKON - Prediksi Alat Kontrasepsi</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .btn-outline-primary {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9 form-container">
+            <h1 class="text-center">SMARTKON</h1>
+            <p class="text-center text-muted mb-4">Aplikasi pintar untuk pemilihan alat kontrasepsi</p>
+            <a href="/history" class="btn btn-outline-primary mb-4 w-100">Lihat Riwayat Prediksi</a>
+
+            <form action="/predict" method="POST">
+                <div class="mb-3">
+                    <label for="usia_istri" class="form-label">Usia Istri:</label>
+                    <input type="text" class="form-control" name="usia_istri" id="usia_istri" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pendidikan_istri" class="form-label">Pendidikan Istri:</label>
+                    <select class="form-select" name="pendidikan_istri" id="pendidikan_istri" required>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                        <option value="Sarjana">Sarjana</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pendidikan_suami" class="form-label">Pendidikan Suami:</label>
+                    <select class="form-select" name="pendidikan_suami" id="pendidikan_suami" required>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                        <option value="Sarjana">Sarjana</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="jumlah_anak" class="form-label">Jumlah Anak:</label>
+                    <input type="text" class="form-control" name="jumlah_anak" id="jumlah_anak" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="agama" class="form-label">Agama:</label>
+                    <select class="form-select" name="agama" id="agama" required>
+                        <option value="Islam">Islam</option>
+                        <option value="Non-Islam">Non-Islam</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="istri_bekerja" class="form-label">Istri Bekerja:</label>
+                    <select class="form-select" name="istri_bekerja" id="istri_bekerja" required>
+                        <option value="Ya">Ya</option>
+                        <option value="Tidak">Tidak</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="kesibukan_suami" class="form-label">Kesibukan Suami:</label>
+                    <select class="form-select" name="kesibukan_suami" id="kesibukan_suami" required>
+                        <option value="rendah">Rendah</option>
+                        <option value="sedang">Sedang</option>
+                        <option value="tinggi">Tinggi</option>
+                        <option value="sangat tinggi">Sangat Tinggi</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="standar_hidup" class="form-label">Standar Hidup:</label>
+                    <select class="form-select" name="standar_hidup" id="standar_hidup" required>
+                        <option value="rendah">Rendah</option>
+                        <option value="sedang">Sedang</option>
+                        <option value="tinggi">Tinggi</option>
+                        <option value="sangat tinggi">Sangat Tinggi</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ekspose_media" class="form-label">Ekspose Media:</label>
+                    <select class="form-select" name="ekspose_media" id="ekspose_media" required>
+                        <option value="Ya">Ya</option>
+                        <option value="Tidak">Tidak</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="model_choice" class="form-label">Pilih Model:</label>
+                    <select class="form-select" name="model_choice" id="model_choice" required>
+                        <option value="C4.5">C4.5</option>
+                        <option value="Random Forest">Random Forest</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Prediksi</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="predictionModal" tabindex="-1" aria-labelledby="predictionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="predictionModalLabel">Hasil Prediksi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="predictionResult">{{ prediction_text }}</h4>
+                <p id="probabilityResult">Probabilitas: {% if prob_text %}{{ prob_text|safe }}{% endif %}%</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+    {% if prediction_text %}
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = new bootstrap.Modal(document.getElementById('predictionModal'));
+        modal.show();
+    });
+    {% endif %}
+</script>
+</body>
+</html>
